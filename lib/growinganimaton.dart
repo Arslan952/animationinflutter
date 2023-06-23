@@ -6,10 +6,32 @@ class GrowingAnimation extends StatefulWidget {
   @override
   State<GrowingAnimation> createState() => _GrowingAnimationState();
 }
+late AnimationController controller;
+late Animation growinganimation;
 
-class _GrowingAnimationState extends State<GrowingAnimation> {
+
+class _GrowingAnimationState extends State<GrowingAnimation> with TickerProviderStateMixin {
+  @override
+  void initState() {
+    controller=AnimationController(vsync: this,duration: const Duration(seconds: 3))
+    ..addListener(() { setState(() {
+
+    });});
+    growinganimation=Tween<double>(begin: 0,end: 200).animate(controller);
+    controller.forward();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Container(
+          height:growinganimation.value ,
+          width:growinganimation.value ,
+          color: Colors.orange,
+        ),
+      ),
+    );
   }
 }
